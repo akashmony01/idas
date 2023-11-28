@@ -1,0 +1,13 @@
+<form
+    method="post"
+    hx-post="{% url 'preset_update' pk=preset_pk %}"
+    hx-swap="innerHTML"
+    hx-target="#preset_update_form"
+    hx-trigger="input delay:1s"
+>
+    {% csrf_token %}
+    {{ preset_form.as_p }}
+    <button type="submit">Save info</button>
+</form>
+
+{% include 'idas/sub/notification.html' with msg=msg msg_color=msg_color %}

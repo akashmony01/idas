@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+
+
+{% block title %}Home Page{% endblock %}
+
+
+
+{% block content %}
+
+    <div style="margin: 50px 0px;">
+        <h1>
+            This is: {{request.user.profile}}
+        </h1>
+
+        <p>This is the home page.</p>
+    </div>
+
+{% endblock %}

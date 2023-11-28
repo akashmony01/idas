@@ -1,0 +1,17 @@
+{% if msg %}
+<div
+    id="msg" _='on load wait 1s then add .hidden'
+    hx-swap-oob="outerHTML:#msg"
+    class="fixed top-28 left-1/2 transform -translate-x-1/2"
+>
+  <div
+      class="max-w-xs bg-green-500 text-sm text-white rounded-md shadow-lg"
+      role="alert"
+      style="background-color: {{msg_color}};"
+  >
+    <div class="flex p-4">
+      {{ msg }}
+    </div>
+  </div>
+</div>
+{% endif %}

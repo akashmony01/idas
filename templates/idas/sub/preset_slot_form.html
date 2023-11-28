@@ -1,0 +1,39 @@
+<form
+    method="post"
+    hx-post="{% url 'preset_slot_update' pk=preset_pk %}"
+    hx-swap="innerHTML"
+    hx-target="#preset_slots_fomrset"
+    hx-trigger="input delay:1s"
+>
+    {% csrf_token %}
+    {{update_slot_formset.management_form}}
+    {% for form in update_slot_formset %}
+    <div class="social-item">
+        {{form.as_p}}
+        {{from.errors}}
+        <a
+            style="cursor: pointer; color: red;"
+            type="button"
+            hx-delete="{% url 'preset_slot_delete' preset_pk=preset_pk slot_pk=form.instance.id %}"
+            hx-headers='{ "X-CSRFToken": "{{ csrf_token }}" }'
+            hx-confirm="Are you sure you want to delete this slot?">
+            Delete this item.
+        </a>
+    </div>
+    {% endfor %}
+</form>
+
+<form
+    method="post"
+    hx-post="{% url 'preset_slot_add' pk=preset_pk %}"
+    hx-swap="innerHTML"
+    hx-target="#preset_slots_fomrset"
+    hx-trigger="submit"
+>
+    {% csrf_token %}
+    {{from.errors}}
+    {{add_slot_form.as_p}}
+    <button type="submit" class="green">Save & Add another</button>
+</form>
+
+{% include 'idas/sub/notification.html' with msg=msg msg_color=msg_color %}</div>

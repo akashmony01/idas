@@ -1,0 +1,24 @@
+<ul>
+    {% for preset in presets %}
+        <li>
+            <p>
+                name: {{ preset.name }}
+                ----
+                place: {{ preset.place }}
+            </p>
+            <a
+                style="cursor: pointer; color: red;"
+                type="button"
+                hx-delete="{% url 'preset_delete' pk=preset.pk %}"
+                hx-headers='{ "X-CSRFToken": "{{ csrf_token }}" }'
+                hx-confirm="Are you sure you want to delete this preset item?"
+                hx-target="#preset_list"
+                hx-swap="innerHTML"
+            >
+                Delete this item.
+            </a>
+        </li>
+    {% endfor %}
+</ul>
+
+{% include 'idas/sub/notification.html' with msg=msg msg_color=msg_color %}
