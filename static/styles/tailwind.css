@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base{
+    html,
+    body{
+        scroll-behavior: smooth;
+        @apply text-secondary font-sans font-normal antialiased;
+    }
+
+    a,
+    button,
+    .btn,
+    .button{
+        @apply cursor-pointer duration-300 hover:opacity-80;
+    }
+
+    form {
+        @apply space-y-6;
+    }
+    form label {
+        @apply block mb-2 cursor-pointer;
+    }
+    form input,
+    form textarea,
+    form select{
+        @apply w-full border-2 px-4 py-3 bg-transparent;
+    }
+
+    form ul {
+        @apply space-y-2 text-secondary-light list-disc pl-4;
+    }
+
+    form button{
+        @apply border-2 border-secondary hover:bg-secondary hover:text-white px-10 py-1 uppercase font-bold;
+    }
+
+    form span{
+        @apply block mt-2 text-secondary-light;
+    }
+}

@@ -1,10 +1,17 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h2>all presets</h2>
 
-    <div id="preset_list">
-        {% include 'idas/sub/preset_list_inner.html' %}
-    </div>
+    <section class="py-20">
+        <div class="container max-w-lg prose prose-base">
+            <h1>
+                All presets
+            </h1>
+
+            <div id="preset_list">
+                {% include 'idas/sub/preset_list_inner.html' %}
+            </div>
+        </div>
+    </section>
 
 {% endblock %}

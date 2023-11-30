@@ -1,11 +1,14 @@
-<ul>
+<ul class="space-y-5">
     {% for preset in presets %}
-        <li>
-            <p>
-                name: {{ preset.name }}
-                ----
-                place: {{ preset.place }}
-            </p>
+        <li class="flex gap-5 justify-between items-center">
+            <a href="{% url 'preset_details' pk=preset.pk %}" class="inline-block flex gap-2">
+                <span>
+                    <span class="font-bold">Name:</span> {{ preset.name }},
+                </span>
+                <span>
+                    <span class="font-bold">Place:</span> {{ preset.place }}
+                </span>
+            </a>
             <a
                 style="cursor: pointer; color: red;"
                 type="button"
@@ -15,7 +18,7 @@
                 hx-target="#preset_list"
                 hx-swap="innerHTML"
             >
-                Delete this item.
+                Delete Item.
             </a>
         </li>
     {% endfor %}

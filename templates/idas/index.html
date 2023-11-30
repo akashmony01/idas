@@ -1,19 +1,270 @@
 {% extends 'base.html' %}
+{% load static %}
 
-
-
-{% block title %}Home Page{% endblock %}
-
-
+{% block title %}Wellcome: IDAS{% endblock %}
 
 {% block content %}
 
-    <div style="margin: 50px 0px;">
-        <h1>
-            This is: {{request.user.profile}}
-        </h1>
+<section class="pb-20 md:pb-0 pt-20" xmlns="http://www.w3.org/1999/html">
+        <div class="container flex flex-col-reverse md:flex-row items-center justify-between gap-20">
+            <article class="w-full md:w-6/12 prose prose-lg lg:prose-xl">
+                <p>
+                    Hi there, this is:
+                </p>
+                <h1>
+                        Dr. ABCD XYZ
+                </h1>
+                <p class="max-w-lg">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Debitis, ducimus enim fuga fugiat maxime
+                    quis rerum sit voluptates.
+                </p>
+                <div class="flex items-center gap-4">
+                    <a href="" class="border-2 border-primary no-underline text-base bg-primary hover:bg-transparent text-white hover:text-primary font-bold px-4 py-3">
+                        Get Appointment
+                    </a>
+                    <a href="" class="border-2 border-primary no-underline text-base hover:bg-primary bg-transparent hover:text-white text-primary font-bold px-4 py-3">
+                        Contact for business
+                    </a>
+                </div>
+            </article>
+            <figure class="w-full md:w-6/12">
+                <img
+                    class="mx-auto w-8/12 md:w-full"
+                    src="{% static 'images/dr.png' %}"
+                    alt="dr"
+                >
+            </figure>
+        </div>
+    </section>
 
-        <p>This is the home page.</p>
-    </div>
+    <section class="py-32 bg-primary text-white">
+        <div class="container text-center">
+            <h2 class="text-5xl font-bold uppercase">
+                My Specilities
+            </h2>
+            <ul class="mt-24 flex flex-wrap items-center justify-center gap-4">
+                <li class="p-10 rounded-md shadow-md bg-primary-light text-secondary">
+                    <h5 class="font-bold text-xl mb-2">
+                        Number 1
+                    </h5>
+                    <p>
+                        This is description number 1.
+                    </p>
+                </li>
+                <li class="p-10 rounded-md shadow-md bg-primary-light text-secondary">
+                    <h5 class="font-bold text-xl mb-2">
+                        Number 1
+                    </h5>
+                    <p>
+                        This is description number 1.
+                    </p>
+                </li><li class="p-10 rounded-md shadow-md bg-primary-light text-secondary">
+                    <h5 class="font-bold text-xl mb-2">
+                        Number 1
+                    </h5>
+                    <p>
+                        This is description number 1.
+                    </p>
+                </li><li class="p-10 rounded-md shadow-md bg-primary-light text-secondary">
+                    <h5 class="font-bold text-xl mb-2">
+                        Number 1
+                    </h5>
+                    <p>
+                        This is description number 1.
+                    </p>
+                </li>
+
+
+            </ul>
+        </div>
+    </section>
+
+
+    <section>
+        <div class="container flex flex-col md:flex-row divide-x-2 divide-primary/50">
+            <div class="py-36 w-full md:w-6/12 pr-20 text-right">
+                <h2 class="text-4xl font-bold uppercase">
+                    Work history
+                </h2>
+                <ul class="mt-24 space-y-12">
+                    <li>
+                        <div class="flex items-center justify-end gap-4">
+                            <h3 class="text-3xl font-medium">
+                                Work history one
+                            </h3>
+                            <img
+                                class="w-10 h-10 rounded-full border-2 border-primary shadow-md"
+                                src="{% static 'images/ph.jpg' %}"
+                                alt="ph"
+                            >
+                        </div>
+                        <article class="mt-8 text-secondary-light space-y-3">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae natus</p>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet culpa deleniti dolorum
+                                fuga fugiat ipsa laudantium maxime molestias
+                            </p>
+                        </article>
+                    </li>
+                    <li>
+                        <div class="flex items-center justify-end gap-4">
+                            <h3 class="text-3xl font-medium">
+                                Work history 99
+                            </h3>
+                            <img
+                                class="w-10 h-10 rounded-full border-2 border-primary shadow-md"
+                                src="{% static 'images/ph.jpg' %}"
+                                alt="ph"
+                            >
+                        </div>
+                        <article class="mt-8 text-secondary-light space-y-3">
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet culpa deleniti dolorum
+                                fuga fugiat ipsa laudantium maxime molestias
+                            </p>
+                        </article>
+                    </li>
+                    <li>
+                        <div class="flex items-center justify-end gap-4">
+                            <h3 class="text-3xl font-medium">
+                                Work history Two
+                            </h3>
+                            <img
+                                class="w-10 h-10 rounded-full border-2 border-primary shadow-md"
+                                src="{% static 'images/ph.jpg' %}"
+                                alt="ph"
+                            >
+                        </div>
+                        <article class="mt-8 text-secondary-light space-y-3">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae natus</p>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet culpa deleniti dolorum
+                            </p>
+                        </article>
+                    </li>
+                </ul>
+
+            </div>
+            <div class="py-36 w-full md:w-6/12 pl-20 text-left">
+                <h2 class="text-4xl font-bold uppercase">
+                    Qualification
+                </h2>
+                <ul class="mt-24 space-y-12">
+                    <li>
+                        <div class="flex items-center justify-start gap-4">
+                            <img
+                                class="w-10 h-10 rounded-full border-2 border-primary shadow-md"
+                                src="{% static 'images/ph.jpg' %}"
+                                alt="ph"
+                            >
+                            <h3 class="text-3xl font-medium">
+                                Quallification number 1
+                            </h3>
+                        </div>
+                        <article class="mt-8 text-secondary-light space-y-3">
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Beatae natus</p>
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet culpa deleniti dolorum
+                                fuga fugiat ipsa laudantium maxime molestias
+                            </p>
+                        </article>
+                    </li>
+                    <li>
+                        <div class="flex items-center justify-start gap-4">
+                            <img
+                                class="w-10 h-10 rounded-full border-2 border-primary shadow-md"
+                                src="{% static 'images/ph.jpg' %}"
+                                alt="ph"
+                            >
+                            <h3 class="text-3xl font-medium">
+                                Qualification number two
+                            </h3>
+                        </div>
+                        <article class="mt-8 text-secondary-light space-y-3">
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet culpa deleniti dolorum
+                                fuga fugiat ipsa laudantium maxime molestias
+                            </p>
+                        </article>
+                    </li>
+                    <li>
+                        <div class="flex items-center justify-start gap-4">
+                            <img
+                                class="w-10 h-10 rounded-full border-2 border-primary shadow-md"
+                                src="{% static 'images/ph.jpg' %}"
+                                alt="ph"
+                            >
+                            <h3 class="text-3xl font-medium">
+                                Qualification number two
+                            </h3>
+                        </div>
+                        <article class="mt-8 text-secondary-light space-y-3">
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet culpa deleniti dolorum
+                                fuga fugiat ipsa laudantium maxime molestias
+                            </p>
+                        </article>
+                    </li>
+                    <li>
+                        <div class="flex items-center justify-start gap-4">
+                            <img
+                                class="w-10 h-10 rounded-full border-2 border-primary shadow-md"
+                                src="{% static 'images/ph.jpg' %}"
+                                alt="ph"
+                            >
+                            <h3 class="text-3xl font-medium">
+                                Qualification number two
+                            </h3>
+                        </div>
+                        <article class="mt-8 text-secondary-light space-y-3">
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet culpa deleniti dolorum
+                                fuga fugiat ipsa laudantium maxime molestias
+                            </p>
+                        </article>
+                    </li>
+                </ul>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="py-32 bg-primary text-white">
+        <div class="container flex flex-col md:flex-row gap-12">
+            <article class="w-full md:w-6/12">
+                <h2 class="text-5xl uppercase font-bold">
+                    Get in Touch
+                </h2>
+                <div class="mt-8 text-lg">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur consequuntur dicta dolorem eaque
+                    earum eos excepturi fugiat hic impedit labore.
+                </div>
+                <a class="mt-10 inline-block font-bold text-lg underline text-lg uppercase">
+                    Get appointment
+                </a>
+            </article>
+            <form class="w-full md:w-6/12 space-y-6">
+                <input
+                    class="form-input w-full border-2 border-white bg-transparent px-4 py-3 placeholder:text-white"
+                    type="text"
+                    placeholder="Your Name"
+                />
+                <input
+                    class="form-input w-full border-2 border-white bg-transparent px-4 py-3 placeholder:text-white"
+                    type="email"
+                    placeholder="Email Address"
+                />
+                <textarea
+                    class="form-input w-full border-2 border-white bg-transparent px-4 py-3 placeholder:text-white"
+                    type="text"
+                    rows="5"
+                    placeholder="Enter your message"
+                ></textarea>
+                <button class="px-6 py-3 border-2 border-white uppercase font-bold hover:bg-white hover:text-primary">
+                    Send message
+                </button>
+            </form>
+        </div>
+    </section>
 
 {% endblock %}

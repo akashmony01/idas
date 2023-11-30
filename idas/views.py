@@ -41,36 +41,43 @@ def profile_view(request):
     return render(request, 'idas/profile.html')
 
 
+from datetime import datetime
+
+
 @login_required
-def booking_view(request):
-    # Create a datetime.date object for the target date
-    target_date = date(2023, 11, 28)
+def appointment_get_view(request):
+    target_date_param = request.GET.get('date')
 
-    # Retrieve all TimeSlotPreset instances that are active on the target date
-    active_presets = TimeSlotPreset.objects.filter(
-        Q(start_date__lte=target_date, end_date__gte=target_date) |
-        Q(start_date=target_date) |
-        Q(repeat_days__contains=target_date.strftime('%a'))
-    )
+    if target_date_param:
+        target_date = datetime.strptime(target_date_param, '%Y-%m-%d').date()
 
-    # Retrieve all TimeSlot instances associated with the active presets
-    all_time_slots = TimeSlot.objects.filter(preset__in=active_presets)
+        active_presets = TimeSlotPreset.objects.filter(
+            Q(start_date__lte=target_date, end_date__gte=target_date) |
+            Q(start_date=target_date) |
+            Q(repeat_days__contains=target_date.strftime('%a'))
+        )
 
-    # Organize time slots by preset name
-    time_slots_by_preset = defaultdict(list)
-    for time_slot in all_time_slots:
-        time_slots_by_preset[time_slot.preset.name].append(str(time_slot))
+        all_time_slots = TimeSlot.objects.filter(preset__in=active_presets)
 
-    # Convert the defaultdict to a regular dictionary
-    time_slots_by_preset = dict(time_slots_by_preset)
+        time_slots_by_preset = defaultdict(list)
+        for time_slot in all_time_slots:
+            time_slots_by_preset[time_slot.preset.name].append(str(time_slot))
 
-    # Pass the time slots as part of the context
-    context = {
-        'target_date': target_date,
-        'time_slots_by_preset': time_slots_by_preset,
-    }
+        time_slots_by_preset = dict(time_slots_by_preset)
 
-    return render(request, 'idas/booking.html', context)
+        context = {
+            'target_date': target_date,
+            'time_slots_by_preset': time_slots_by_preset,
+        }
+
+
+    else:
+        context = {
+            'msg': 'Please choose a date first.',
+            'msg_color': 'red',
+        }
+
+    return render(request, 'idas/appointment.html', context)
 
 
 @user_passes_test(lambda user: user.is_staff)

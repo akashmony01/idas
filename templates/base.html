@@ -8,6 +8,10 @@
     <script src="https://unpkg.com/htmx.org@1.7.0/dist/htmx.min.js"></script>
     <script src="https://unpkg.com/hyperscript.org@0.9.11"></script>
 
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/idas.css' %}">
+
+
     <title>{% block title %}Individual Doctor Appointment System{% endblock %}</title>
   </head>
   <body>
@@ -18,17 +22,13 @@
         hx-swap-oob
     ></div>
 
-    <header>
-        {% include 'components/header.html' %}
-    </header>
+    {% include 'components/header.html' %}
 
     <main id="content">
         {% block content %}{% endblock %}
     </main>
 
-    <footer>
-        footer
-    </footer>
+    {% include 'components/footer.html' %}
 
   </body>
 </html>

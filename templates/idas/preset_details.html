@@ -1,14 +1,23 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h2>preset details</h2>
+    <section class="py-20">
+        <div class="container flex flex-col md:flex-row gap-20">
 
-    <div id="preset_update_form">
-        {% include 'idas/sub/preset_update_form.html' %}
-    </div>
+            <div class="w-full prose prose-lg">
+                <h2 class="mb-8">Preset details</h2>
+                <div id="preset_update_form">
+                    {% include 'idas/sub/preset_update_form.html' %}
+                </div>
+            </div>
 
-    <div id="preset_slots_fomrset">
-        {% include 'idas/sub/preset_slot_form.html' %}
-    </div>
+            <div class="w-full prose prose-lg">
+                <h2 class="mb-8">Preset Slots</h2>
+                <div id="preset_slots_fomrset">
+                    {% include 'idas/sub/preset_slot_form.html' %}
+                </div>
+            </div>
+        </div>
+    </section>
 
 {% endblock %}

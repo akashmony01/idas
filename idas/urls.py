@@ -1,9 +1,9 @@
 from django.urls import path
 from .views import (
-    home_view, signup_view, profile_view, booking_view,
+    home_view, signup_view, profile_view,
     preset_create_view, preset_details_view, preset_update_view,
     preset_slot_add_view, preset_slot_update_view, preset_slot_delete_view,
-    preset_list_view, preset_delete_view
+    preset_list_view, preset_delete_view, appointment_get_view
 )
 
 urlpatterns = [
@@ -13,8 +13,6 @@ urlpatterns = [
     path('', home_view, name='home'),
     path('profile/', profile_view, name='profile'),
     path('accounts/profile/', profile_view, name='profile_alt'),
-
-    path('booking/', booking_view, name='booking'),
 
     path('preset-create/', preset_create_view, name='preset_create'),
     path('preset-details/<int:pk>/', preset_details_view, name='preset_details'),
@@ -27,4 +25,6 @@ urlpatterns = [
     path('preset-list/', preset_list_view, name='preset_list'),
     path('preset/', preset_list_view, name='preset_list_alt'),
     path('preset-delete/<int:pk>/', preset_delete_view, name='preset_delete'),
+
+    path('appointment/', appointment_get_view, name='appointment_get'),
 ]
