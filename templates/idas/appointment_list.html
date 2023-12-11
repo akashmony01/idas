@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <section class="py-20">
+        <div class="container max-w-lg prose prose-base">
+            <h1>
+                All Appointments
+            </h1>
+
+            <div id="appointment_list">
+                {% include 'idas/sub/appointment_list_inner.html' %}
+            </div>
+        </div>
+    </section>
+
+{% endblock %}

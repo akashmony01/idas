@@ -639,8 +639,7 @@ form label {
 }
 
 form input,
-    form textarea,
-    form select {
+    form textarea {
   width: 100%;
   border-width: 2px;
   background-color: transparent;
@@ -648,6 +647,16 @@ form input,
   padding-right: 1rem;
   padding-top: 0.75rem;
   padding-bottom: 0.75rem;
+}
+
+form select {
+  width: 100%;
+  border-width: 2px;
+  background-color: transparent;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
 }
 
 form ul {
@@ -672,8 +681,8 @@ form button {
   border-color: rgb(50 54 67 / var(--tw-border-opacity));
   padding-left: 2.5rem;
   padding-right: 2.5rem;
-  padding-top: 0.25rem;
-  padding-bottom: 0.25rem;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
   font-weight: 700;
   text-transform: uppercase;
 }
@@ -2098,6 +2107,14 @@ form span {
   margin-bottom: 0.5rem;
 }
 
+.mb-8 {
+  margin-bottom: 2rem;
+}
+
+.mr-2 {
+  margin-right: 0.5rem;
+}
+
 .mt-10 {
   margin-top: 2.5rem;
 }
@@ -2118,10 +2135,6 @@ form span {
   margin-top: 2rem;
 }
 
-.mb-8 {
-  margin-bottom: 2rem;
-}
-
 .block {
   display: block;
 }
@@ -2132,10 +2145,6 @@ form span {
 
 .flex {
   display: flex;
-}
-
-.grid {
-  display: grid;
 }
 
 .hidden {
@@ -2166,10 +2175,6 @@ form span {
   max-width: 20rem;
 }
 
-.max-w-xl {
-  max-width: 36rem;
-}
-
 .-translate-x-1\/2 {
   --tw-translate-x: -50%;
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
@@ -2179,8 +2184,8 @@ form span {
   transform: translate(var(--tw-translate-x), var(--tw-translate-y)) rotate(var(--tw-rotate)) skewX(var(--tw-skew-x)) skewY(var(--tw-skew-y)) scaleX(var(--tw-scale-x)) scaleY(var(--tw-scale-y));
 }
 
-.grid-cols-1 {
-  grid-template-columns: repeat(1, minmax(0, 1fr));
+.cursor-not-allowed {
+  cursor: not-allowed;
 }
 
 .flex-col {
@@ -2219,6 +2224,10 @@ form span {
   gap: 3rem;
 }
 
+.gap-2 {
+  gap: 0.5rem;
+}
+
 .gap-20 {
   gap: 5rem;
 }
@@ -2231,20 +2240,12 @@ form span {
   gap: 1rem;
 }
 
-.gap-8 {
-  gap: 2rem;
-}
-
-.gap-2 {
-  gap: 0.5rem;
-}
-
 .gap-5 {
   gap: 1.25rem;
 }
 
-.gap-10 {
-  gap: 2.5rem;
+.gap-8 {
+  gap: 2rem;
 }
 
 .space-y-1 > :not([hidden]) ~ :not([hidden]) {
@@ -2265,16 +2266,16 @@ form span {
   margin-bottom: calc(0.75rem * var(--tw-space-y-reverse));
 }
 
-.space-y-6 > :not([hidden]) ~ :not([hidden]) {
-  --tw-space-y-reverse: 0;
-  margin-top: calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));
-  margin-bottom: calc(1.5rem * var(--tw-space-y-reverse));
-}
-
 .space-y-5 > :not([hidden]) ~ :not([hidden]) {
   --tw-space-y-reverse: 0;
   margin-top: calc(1.25rem * calc(1 - var(--tw-space-y-reverse)));
   margin-bottom: calc(1.25rem * var(--tw-space-y-reverse));
+}
+
+.space-y-6 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-y-reverse: 0;
+  margin-top: calc(1.5rem * calc(1 - var(--tw-space-y-reverse)));
+  margin-bottom: calc(1.5rem * var(--tw-space-y-reverse));
 }
 
 .divide-x-2 > :not([hidden]) ~ :not([hidden]) {
@@ -2368,11 +2369,6 @@ form span {
 .py-36 {
   padding-top: 9rem;
   padding-bottom: 9rem;
-}
-
-.py-4 {
-  padding-top: 1rem;
-  padding-bottom: 1rem;
 }
 
 .py-6 {
@@ -2491,6 +2487,10 @@ form span {
 
 .no-underline {
   text-decoration-line: none;
+}
+
+.opacity-80 {
+  opacity: 0.8;
 }
 
 .shadow-lg {
@@ -2760,24 +2760,28 @@ form span {
     width: 33.333333%;
   }
 
+  .md\:w-5\/12 {
+    width: 41.666667%;
+  }
+
   .md\:w-6\/12 {
     width: 50%;
+  }
+
+  .md\:w-8\/12 {
+    width: 66.666667%;
   }
 
   .md\:w-full {
     width: 100%;
   }
 
-  .md\:grid-cols-2 {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-
   .md\:flex-row {
     flex-direction: row;
   }
 
-  .md\:gap-20 {
-    gap: 5rem;
+  .md\:gap-5 {
+    gap: 1.25rem;
   }
 
   .md\:pb-0 {

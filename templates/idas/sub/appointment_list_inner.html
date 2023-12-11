@@ -1,0 +1,27 @@
+<ul class="space-y-5">
+    {% for appointment in appointment_list %}
+        <li class="flex gap-5 justify-between items-center">
+            <a href="{% url 'appointment_details' pk=appointment.pk %}" class="inline-block flex gap-2">
+                <span>
+                    <span class="font-bold">Date:</span> {{ appointment.appointment_date }},
+                </span>
+                <span>
+                    <span class="font-bold">Time:</span> {{ appointment.appointment_slot.start_time }}
+                </span>
+            </a>
+            <a
+                style="cursor: pointer; color: red;"
+                type="button"
+                hx-delete="{% url 'appointment_delete' pk=appointment.pk %}"
+                hx-headers='{ "X-CSRFToken": "{{ csrf_token }}" }'
+                hx-confirm="Are you sure you want to delete this preset item?"
+                hx-target="#appointment_list"
+                hx-swap="innerHTML"
+            >
+                Delete Item.
+            </a>
+        </li>
+    {% endfor %}
+</ul>
+
+{% include 'idas/sub/notification.html' with msg=msg msg_color=msg_color %}

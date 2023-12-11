@@ -1,0 +1,102 @@
+{% extends 'base.html' %}
+
+{% block title %}Create Appointment{% endblock %}
+
+{% block content %}
+
+    <section class="py-32">
+        <div class="container prose prose-base">
+            {% if invalid_slot or past_date or slot_is_taken %}
+                <h1>
+                    {% if invalid_slot %}
+                        Invalid Time Slot Alert!
+                    {% elif past_date %}
+                        Past Date Alert!
+                    {% elif slot_is_taken %}
+                        This slot is taken!
+                    {% endif %}
+                </h1>
+                <p>
+                    {% if invalid_slot %}
+                        You have selected and invalid time slot please select again.
+                    {% elif past_date %}
+                        You have selected a date from past. Please select another one.
+                    {% elif slot_is_taken %}
+                        A appointment already exists at
+                        <strong>{{appointment_slot.start_time}}</strong> of
+                        <strong>{{appointment_date}}</strong>. So please try another slot.
+                    {% endif %}
+                </p>
+                <hr />
+                <a href="{% url 'appointment_get' %}" class="text-xl">
+                    {% if invalid_slot or slot_is_taken %}
+                        Go back, and choose another time slot.
+                    {% elif past_date %}
+                        Go back, and choose another date.
+                    {% endif %}
+                </a>
+            {% else %}
+                <h1>
+                    Get Appointment
+                </h1>
+                <p>
+                    <span class="mr-2">
+                        For date: <strong>{{appointment_date}}</strong> at <strong>{{appointment_slot.start_time}}</strong>
+                    </span>
+                    <a href="{% url 'appointment_get' %}">Update</a>
+                </p>
+                <hr />
+
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form.errors }}
+
+                    {{ form.appointment_date }}
+                    {{ form.appointment_slot }}
+                    {{ form.appointment_status }}
+
+                    {{ form.patient_name.label_tag }}
+                    {{ form.patient_name }}
+
+                    <div class="flex flex-col md:flex-row items-center md:gap-5">
+                        <div class="w-full md:w-6/12">
+                            {{ form.patient_type.label_tag }}
+                            {{ form.patient_type }}
+                        </div>
+                        <div class="w-full md:w-6/12">
+                            {{ form.patient_gender.label_tag }}
+                            {{ form.patient_gender }}
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col md:flex-row items-center md:gap-5">
+                        <div class="w-full md:w-6/12">
+                            {{ form.patient_phone.label_tag }}
+                            {{ form.patient_phone }}
+                        </div>
+                        <div class="w-full md:w-6/12">
+                            {{ form.patient_email.label_tag }}
+                            {{ form.patient_email }}
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col md:flex-row items-center md:gap-5">
+                        <div class="w-full md:w-6/12">
+                            {{ form.patient_description.label_tag }}
+                            {{ form.patient_description }}
+                        </div>
+                        <div class="w-full md:w-6/12">
+                            {{ form.patient_address.label_tag }}
+                            {{ form.patient_address }}
+                        </div>
+                    </div>
+
+                  <button type="submit">Confirm Appointment</button>
+            </form>
+            {% endif %}
+        </div>
+    </section>
+
+{% endblock %}
+
+{% include 'idas/sub/notification.html' with msg=msg msg_color=msg_color %}

@@ -9,7 +9,7 @@
       <form
           class="mt-12"
           method="post"
-          action="{% url 'login' %}"
+          action="{% url 'signup' %}"
       >
         {% csrf_token %}
         {{ form.as_p }}

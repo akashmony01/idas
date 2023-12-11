@@ -1,0 +1,46 @@
+<form
+    method="post"
+    enctype="multipart/form-data"
+    hx-post="{% url 'appointment_file_update' pk=appointment_pk %}"
+    hx-swap="outerHTML"
+    hx-target="#appointment_file_form"
+    hx-trigger="input delay:1s"
+>
+    {% csrf_token %}
+    {{update_file_form.management_form}}
+    {% for form in update_file_form %}
+    <div class="file-item">
+        {{form.as_p}}
+        <div class="">
+              <img src="{{ form.instance.file.url }}" alt="{{ form.instance.name }}">
+        </div>
+        <a
+            style="cursor: pointer; color: red;"
+            type="button"
+            hx-delete="{% url 'appointment_file_delete' app_pk=appointment_pk file_pk=form.instance.id %}"
+            hx-headers='{ "X-CSRFToken": "{{ csrf_token }}" }'
+            hx-confirm="Are you sure you want to delete this file?"
+            hx-target="#appointment_file_form"
+            hx-swap="innerHTML"
+        >
+            Delete this item. {{form.instance.id}}
+        </a>
+    </div>
+    {% endfor %}
+</form>
+
+
+<form
+    method="post"
+    enctype="multipart/form-data"
+    hx-post="{% url 'appointment_file_add' pk=appointment_pk %}"
+    hx-swap="outerHTML"
+    hx-target="#appointment_file_form"
+    hx-trigger="submit"
+>
+    {% csrf_token %}
+    {{add_file_form.as_p}}
+    <button type="submit">Save File</button>
+</form>
+
+{% include 'idas/sub/notification.html' with msg=msg msg_color=msg_color %}

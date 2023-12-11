@@ -1,0 +1,54 @@
+<form
+    method="post"
+    hx-post="{% url 'appointment_update' pk=appointment_pk %}"
+    hx-swap="innerHTML"
+    hx-target="#appointment_update_form"
+    hx-trigger="input delay:1s"
+>
+    {% csrf_token %}
+    {{ appointment_form.errors }}
+
+    {{ appointment_form.appointment_date }}
+    {{ appointment_form.appointment_slot }}
+    {{ appointment_form.appointment_status }}
+
+    {{ appointment_form.patient_name.label_tag }}
+    {{ appointment_form.patient_name }}
+
+    <div class="flex flex-col md:flex-row items-center md:gap-5">
+        <div class="w-full md:w-6/12">
+            {{ appointment_form.patient_type.label_tag }}
+            {{ appointment_form.patient_type }}
+        </div>
+        <div class="w-full md:w-6/12">
+            {{ appointment_form.patient_gender.label_tag }}
+            {{ appointment_form.patient_gender }}
+        </div>
+    </div>
+
+    <div class="flex flex-col md:flex-row items-center md:gap-5">
+        <div class="w-full md:w-6/12">
+            {{ appointment_form.patient_phone.label_tag }}
+            {{ appointment_form.patient_phone }}
+        </div>
+        <div class="w-full md:w-6/12">
+            {{ appointment_form.patient_email.label_tag }}
+            {{ appointment_form.patient_email }}
+        </div>
+    </div>
+
+    <div class="flex flex-col md:flex-row items-center md:gap-5">
+        <div class="w-full md:w-6/12">
+            {{ appointment_form.patient_description.label_tag }}
+            {{ appointment_form.patient_description }}
+        </div>
+        <div class="w-full md:w-6/12">
+            {{ appointment_form.patient_address.label_tag }}
+            {{ appointment_form.patient_address }}
+        </div>
+    </div>
+
+    <button type="submit">Save info</button>
+</form>
+
+{% include 'idas/sub/notification.html' with msg=msg msg_color=msg_color %}

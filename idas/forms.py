@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from .models import Profile, TimeSlotPreset, TimeSlot
+from .models import Profile, TimeSlotPreset, TimeSlot, Appointment, PatientFile
 
 class CustomSignupForm(UserCreationForm):
     email = forms.EmailField(required=True)
@@ -32,8 +32,8 @@ class TimeSlotForm(forms.ModelForm):
         model = TimeSlot
         fields = ['title', 'start_time', 'end_time']
         widgets = {
-            'start_time': forms.TextInput(attrs={'type': 'time'}),
-            'end_time': forms.TextInput(attrs={'type': 'time'}),
+            'start_time': forms.TimeInput(attrs={'type': 'time'}),
+            'end_time': forms.TimeInput(attrs={'type': 'time'}),
         }
 
 
@@ -44,5 +44,44 @@ TimeSlotFormSet = forms.modelformset_factory(
             'start_time': forms.TimeInput(attrs={'type': 'time'}),
             'end_time': forms.TimeInput(attrs={'type': 'time'}),
     },
+    extra=0
+)
+
+
+class AppointmentForm(forms.ModelForm):
+    class Meta:
+        model = Appointment
+        fields = [
+            'patient_name',
+            'patient_gender',
+            'patient_description',
+            'patient_type',
+            'patient_phone',
+            'patient_email',
+            'patient_address',
+            'appointment_slot',
+            'appointment_date',
+            'appointment_status',
+            'cancel_note',
+            'doctor_note',
+            'prescription',
+        ]
+        widgets = {
+            'appointment_date': forms.HiddenInput(attrs={'readonly': 'readonly'}),
+            'appointment_slot': forms.HiddenInput(attrs={'readonly': 'readonly'}),
+            'appointment_status': forms.HiddenInput(attrs={'readonly': 'readonly'}),
+        }
+
+
+
+class PatientFileForm(forms.ModelForm):
+    class Meta:
+        model = PatientFile
+        fields = ["name", "file"]
+
+
+PatientFileFormSet = forms.modelformset_factory(
+    PatientFile,
+    fields=["name", "file"],
     extra=0
 )

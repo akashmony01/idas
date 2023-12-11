@@ -63,6 +63,10 @@ class TimeSlotPreset(TimeStampMixin):
         if self.start_date and (self.start_date < today or self.start_date == today):
             raise ValidationError("Start date must be at least tomorrow's date.")
 
+        # Validate that old_patient_fees are less than or equal to new_patient_fees
+        if self.old_patient_fees > self.new_patient_fees:
+            raise ValidationError("Old patient fees must be less than or equal to new patient fees.")
+
     def __str__(self):
         return self.name
 
@@ -78,6 +82,15 @@ class TimeSlot(TimeStampMixin):
         if self.start_time and self.end_time and self.start_time >= self.end_time:
             raise ValidationError("End time must be after start time.")
 
+        overlapping_slots = TimeSlot.objects.filter(
+            preset=self.preset,
+            start_time__lt=self.end_time,
+            end_time__gt=self.start_time,
+        ).exclude(pk=self.pk)  # Exclude self if instance is being updated
+
+        if overlapping_slots.exists():
+            raise ValidationError("A slot already exist for this time, please check again.")
+
     def __str__(self):
         return f"{self.title} - {self.start_time} to {self.end_time} ({self.preset})"
 
@@ -92,6 +105,12 @@ class Appointment(models.Model):
         ('female', 'Female'),
         ('other', 'Other'),
     ]
+    APPOINTMENT_STATUS = [
+        ('confirmed', 'Confirmed'),
+        ('arrived', 'Arrived'),
+        ('completed', 'Completed'),
+        ('cancelled', 'Cancelled'),
+    ]
 
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     patient_name = models.CharField(max_length=255)
@@ -103,25 +122,51 @@ class Appointment(models.Model):
     patient_address = models.TextField(blank=True, null=True)
     appointment_slot = models.ForeignKey(TimeSlot, on_delete=models.CASCADE)
     appointment_date = models.DateField()
+    appointment_status = models.CharField(max_length=9, choices=APPOINTMENT_STATUS, default='confirmed')
+    cancel_note = models.TextField(blank=True, null=True)
+    doctor_note = models.TextField(blank=True, null=True)
+    prescription = models.ImageField(
+        upload_to='prescriptions/',
+        blank=True, null=True,
+        validators = [FileExtensionValidator(
+            allowed_extensions=['png', 'jpg', 'jpeg', 'gif', 'pdf']
+        )]
+    )
+
+    unique_together = ['appointment_date', 'appointment_slot']
 
     def clean(self):
-        # Validate that appointment_date is not a past date and not today
+        # Validate that appointment_date is not a past date
         today = timezone.now().date()
         if self.appointment_date and (self.appointment_date < today or self.appointment_date == today):
             raise ValidationError("Appointment date must be at least tomorrow's date.")
+
+        # Validate the presence of cancel_note for 'cancelled' status
+        if self.appointment_status == 'cancelled' and not self.cancel_note:
+            raise ValidationError("Cancellation requires a cancellation note.")
+
+        # Validate the presence of doctor_note and prescription for 'arrived' or 'completed' status
+        if self.prescription and self.appointment_status in ['arrived', 'completed']:
+            raise ValidationError("Prescription can be prescribed if the patient has arrived or the appointment is completed.")
+
+        # Additional validation for unique appointment_date and appointment_slot
+        conflicting_appointments = Appointment.objects.filter(
+            appointment_date=self.appointment_date,
+            appointment_slot=self.appointment_slot
+        ).exclude(pk=self.pk)  # Exclude the current instance when checking for conflicts
+
+        if conflicting_appointments.exists():
+            raise ValidationError("An appointment with the same date and slot already exists. Please update the date or slot.")
 
     def __str__(self):
         return f"{self.patient_name} - {self.appointment_date}"
 
 
+
 class PatientFile(models.Model):
     appointment = models.ForeignKey(Appointment, on_delete=models.CASCADE, related_name='patient_files')
-    file = models.FileField(
-        upload_to='patient_files/',
-        validators=[FileExtensionValidator(
-            allowed_extensions=['png', 'jpg', 'jpeg', 'gif', 'pdf']
-        )]
-    )
+    name = models.CharField(max_length=255)
+    file = models.ImageField(upload_to='patient_files/')
 
     def __str__(self):
-        return str(self.file)
+        return self.name

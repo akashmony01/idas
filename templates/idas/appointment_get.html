@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+
+
+
+{% block title %}Booking Page{% endblock %}
+
+
+
+{% block content %}
+
+    <section class="py-32">
+        <div class="container prose prose-base">
+
+            {% if past_date %}
+                <h1>
+                    You choose a past date
+                </h1>
+                <p>
+                    please select a present or a future day, that will valid.
+                </p>
+            {% else %}
+                <h1>
+                    Get appointment for {{target_date}}
+                </h1>
+                <p>
+                    by selecting the date and time slot.
+                </p>
+            {% endif %}
+
+            <form id="dateForm" action="{% url 'appointment_get' %}" method="get">
+                <label for="target_date_input">Select Date:</label>
+                <input type="date" id="target_date_input" name="date" />
+            </form>
+
+
+            <div id="appointment_list">
+                {% for preset, slots in time_slots.items %}
+                    <h2>{{ preset }}</h2>
+                    <ul>
+                        {% for item in slots %}
+                            <li>
+                                {% if item.is_taken %}
+                                    <span class="opacity-80 cursor-not-allowed	">
+                                        {{ item.slot }} --taken already {{item.slot.pk}}
+                                    </span>
+                                {% else %}
+                                    <a href="{% url 'appointment_create' target_date=target_date slot_pk=item.slot.pk %}">
+                                        {{ item.slot }}
+                                    </a>
+                                {% endif %}
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% empty %}
+                    <p>
+                        No free slot found on {{target_date}}.
+                    </p>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const initialDate = urlParams.get('date');
+
+        document.getElementById('target_date_input').value = initialDate;
+
+        document.getElementById('target_date_input').addEventListener('input', function() {
+            document.getElementById('dateForm').submit();
+        });
+    </script>
+
+{% endblock %}
+
+{% include 'idas/sub/notification.html' with msg=msg msg_color=msg_color %}

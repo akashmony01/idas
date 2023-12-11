@@ -23,9 +23,12 @@
         @apply block mb-2 cursor-pointer;
     }
     form input,
-    form textarea,
-    form select{
+    form textarea{
         @apply w-full border-2 px-4 py-3 bg-transparent;
+    }
+
+    form select {
+        @apply w-full border-2 px-4 py-2 bg-transparent;
     }
 
     form ul {
@@ -33,7 +36,7 @@
     }
 
     form button{
-        @apply border-2 border-secondary hover:bg-secondary hover:text-white px-10 py-1 uppercase font-bold;
+        @apply border-2 border-secondary hover:bg-secondary hover:text-white px-10 py-2 uppercase font-bold;
     }
 
     form span{
