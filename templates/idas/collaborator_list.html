@@ -1,0 +1,17 @@
+{% extends 'dash_layout.html' %}
+
+{% block dash_content %}
+
+        <div class="container">
+            <h1 class="text-4xl md:text-5xl font-bold">
+              Collaborator List
+            </h1>
+
+
+            <ul id="manager_list" class="mt-14 space-y-5">
+                {% include 'idas/sub/collaborator_list_inner.html' %}
+            </ul>
+
+        </div>
+
+{% endblock %}

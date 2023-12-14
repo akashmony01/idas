@@ -1,0 +1,12 @@
+<form
+    method="post"
+    hx-post="{% url 'day_off_update' pk=day_off_pk %}"
+    hx-swap="innerHTML"
+    hx-target="#day_off_update_form"
+    hx-trigger="input delay:1s"
+>
+    {% csrf_token %}
+    {{ form.as_p }}
+</form>
+
+{% include 'idas/sub/notification.html' with msg=msg msg_color=msg_color %}

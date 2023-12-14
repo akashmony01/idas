@@ -1,0 +1,56 @@
+<div
+    x-show="openComplete"
+    style="z-index: 999999;"
+    class="fixed top-0 left-0 right-0 bottom-0 flex flex-col items-center justify-center"
+>
+    <span
+        x-on:click="openComplete = false"
+        x-cloak
+        class="z-0 absolute top-0 left-0 right-0 bottom-0 bg-primary opacity-30"
+    ></span>
+    <div style="max-height: 100%" class="container max-w-3xl sticky z-10 overflow-y-auto">
+        <form
+            class="w-full p-10 bg-white shadow-md rounded-lg"
+            id="complete_form"
+            method="post"
+            enctype="multipart/form-data"
+
+            {% if is_single %}
+                hx-post="{% url 'appointment_mark_completed' pk=appointment.pk %}?is_single=True"
+                hx-swap="innerHTML"
+                hx-target="#appointment_view"
+            {% else %}
+                hx-post="{% url 'appointment_mark_completed' pk=appointment.pk %}"
+                hx-swap="innerHTML"
+                hx-target="#appointment_list_today"
+            {% endif %}
+            hx-trigger="submit"
+        >
+            {% csrf_token %}
+            <label for="prescription" class="text-xl md:text-2xl text-primary font-bold">
+                Upload prescription.
+            </label>
+            <input
+                id="prescription"
+                name="prescription"
+                type="file"
+                class="w-full p-4 border-2 border-secondary/20 cursor-pointer"
+                required
+            />
+            <label for="doctor_note" class="text-xl md:text-2xl text-primary font-bold">
+                Provide guide for patients.
+            </label>
+            <textarea
+                id="doctor_note"
+                class="w-full border-2 border-secondary/20 p-4"
+                placeholder="Your appointment is getting cancelled because.."
+                rows="5"
+                name="doctor_note"
+                required
+            ></textarea>
+            <button type="submit" class="btn mt-8 border-2 border-green-500 px-4 py-3 text-green-500 hover:text-white hover:bg-green-500">
+                Mark Complete
+            </button>
+        </form>
+    </div>
+</div>

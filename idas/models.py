@@ -3,17 +3,8 @@ from django.contrib.auth.models import User
 from django.utils import timezone
 from django.core.exceptions import ValidationError
 from django.core.validators import FileExtensionValidator
+from solo.models import SingletonModel
 
-
-
-class SingletonModel(models.Model):
-    class Meta:
-        abstract = True
-    def save(self, *args, **kwargs):
-        self.pk = 1
-        super().save(*args, **kwargs)
-    def delete(self, *args, **kwargs):
-        pass
 
 class TimeStampMixin(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
@@ -22,24 +13,50 @@ class TimeStampMixin(models.Model):
     class Meta:
         abstract = True
 
-# Create your models here.
-class Profile(TimeStampMixin):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    first_name = models.CharField(max_length=30, blank=True, null=True)
-    last_name = models.CharField(max_length=30, blank=True, null=True)
-    avatar = models.ImageField(upload_to='avatars/', blank=True, null=True)
-    address = models.TextField(blank=True, null=True)
+class SiteInfo(SingletonModel):
+    hero_subheading = models.CharField(max_length=255, default="Hi there, this is:")
+    hero_heading = models.CharField(max_length=255, default="Dr. ABCD XYZ")
+    hero_desc = models.TextField(default="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Debitis, ducimus enim fuga fugiat maxime quis rerum sit voluptates.")
+    hero_btn_1_text = models.CharField(max_length=255, default="Get Appointment")
+    hero_btn_2_text = models.CharField(max_length=255, default="Contact for business")
+    hero_image = models.ImageField(upload_to='site_files/', blank=True, null=True)
+    speciality_heading = models.CharField(max_length=255, default="MY SPECILITIES")
+    work_history_heading = models.CharField(max_length=255, default="WORK HISTORY")
+    qualification_heading = models.CharField(max_length=255, default="QUALIFICATION")
+    contact_heading = models.CharField(max_length=255, default="GET IN TOUCH")
+    contact_desc = models.TextField(default="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aspernatur consequuntur dicta dolorem eaque earum eos excepturi fugiat hic impedit labore.")
+    contact_btn_1_text = models.CharField(max_length=255, default="GET APPOINTMENT")
+    contact_btn_2_text = models.CharField(max_length=255, default="SEND MESSAGE")
 
     def __str__(self):
-        if self.first_name and self.last_name:
-            return self.first_name+" "+self.last_name
-        elif self.first_name:
-            return self.first_name
-        elif self.last_name:
-            return self.last_name
-        else:
-            return self.user.username
+        return "Site Information"
 
+
+class Speciality(models.Model):
+    title = models.CharField(max_length=255)
+    description = models.TextField()
+
+    def __str__(self):
+        return self.title
+
+
+class WorkHistory(models.Model):
+    title = models.CharField(max_length=255)
+    description = models.TextField()
+
+    def __str__(self):
+        return self.title
+
+
+class Qualification(models.Model):
+    title = models.CharField(max_length=255)
+    description = models.TextField()
+
+    def __str__(self):
+        return self.title
+
+
+# Create your models here.
 class TimeSlotPreset(TimeStampMixin):
     name = models.CharField(max_length=255)
     place = models.CharField(max_length=255)
@@ -95,6 +112,25 @@ class TimeSlot(TimeStampMixin):
         return f"{self.title} - {self.start_time} to {self.end_time} ({self.preset})"
 
 
+class Profile(TimeStampMixin):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    first_name = models.CharField(max_length=30, blank=True, null=True)
+    last_name = models.CharField(max_length=30, blank=True, null=True)
+    avatar = models.ImageField(upload_to='avatars/', blank=True, null=True)
+    address = models.TextField(blank=True, null=True)
+    preset = models.ForeignKey(TimeSlotPreset, on_delete=models.CASCADE, related_name='preset_manager', blank=True, null=True)
+
+    def __str__(self):
+        if self.first_name and self.last_name:
+            return self.first_name+" "+self.last_name
+        elif self.first_name:
+            return self.first_name
+        elif self.last_name:
+            return self.last_name
+        else:
+            return self.user.username
+
+
 class Appointment(models.Model):
     PATIENT_TYPE_CHOICES = [
         ('old', 'Old Patient'),
@@ -138,8 +174,8 @@ class Appointment(models.Model):
     def clean(self):
         # Validate that appointment_date is not a past date
         today = timezone.now().date()
-        if self.appointment_date and (self.appointment_date < today or self.appointment_date == today):
-            raise ValidationError("Appointment date must be at least tomorrow's date.")
+        if self.appointment_date and (self.appointment_date < today ):
+            raise ValidationError("Appointment date must be at today or a date in future.")
 
         # Validate the presence of cancel_note for 'cancelled' status
         if self.appointment_status == 'cancelled' and not self.cancel_note:
@@ -164,9 +200,31 @@ class Appointment(models.Model):
 
 
 class PatientFile(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     appointment = models.ForeignKey(Appointment, on_delete=models.CASCADE, related_name='patient_files')
     name = models.CharField(max_length=255)
     file = models.ImageField(upload_to='patient_files/')
 
     def __str__(self):
         return self.name
+
+
+class DayOff(models.Model):
+    title = models.CharField(max_length=255)
+    start_date = models.DateField(null=False, blank=False)
+    end_date = models.DateField(null=True, blank=True)
+    desc_note = models.TextField(blank=False, null=False)
+
+    def clean(self):
+        super().clean()
+
+        today = timezone.now().date()
+        if self.start_date and self.start_date < today:
+            raise ValidationError('Start date must be today or a date in the future.')
+
+        if self.end_date and (not self.start_date or self.end_date <= self.start_date):
+            raise ValidationError('End date must be after the start date.')
+
+
+    def __str__(self):
+        return self.title

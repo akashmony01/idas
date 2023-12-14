@@ -1,0 +1,45 @@
+<div
+    x-show="openCancel"
+    style="z-index: 999999;"
+    class="fixed top-0 left-0 right-0 bottom-0 flex flex-col items-center justify-center"
+>
+    <span
+        x-on:click="openCancel = false"
+        x-cloak
+        class="z-0 absolute top-0 left-0 right-0 bottom-0 bg-primary opacity-30"
+    ></span>
+    <div style="max-height: 100%" class="container max-w-3xl sticky z-10 overflow-y-auto">
+        <form
+            class="w-full p-10 bg-white shadow-md rounded-lg"
+            id="cancel_form"
+            method="post"
+
+            {% if is_single %}
+                hx-post="{% url 'appointment_mark_cancelled' pk=appointment.pk %}?is_single=True"
+                hx-swap="innerHTML"
+                hx-target="#appointment_view"
+            {% else %}
+                hx-post="{% url 'appointment_mark_cancelled' pk=appointment.pk %}"
+                hx-swap="innerHTML"
+                hx-target="#appointment_list_today"
+            {% endif %}
+            hx-trigger="submit"
+        >
+            {% csrf_token %}
+            <label for="cancel_note" class="text-2xl md:text-3xl text-primary font-bold">
+                Provide reason for cancelling.
+            </label>
+            <textarea
+                id="cancel_note"
+                class="w-full border-secondary/20 p-4"
+                placeholder="Your appointment is getting cancelled because.."
+                rows="5"
+                name="cancel_note"
+                required
+            ></textarea>
+            <button type="submit" class="btn mt-8 border-2 border-red-500 px-4 py-3 text-red-500 hover:text-white hover:bg-red-500">
+                Confirm Cancellation
+            </button>
+        </form>
+    </div>
+</div>

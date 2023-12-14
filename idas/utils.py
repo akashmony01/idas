@@ -1,6 +1,14 @@
-from .models import TimeSlotPreset, TimeSlot, Appointment
+from .models import TimeSlotPreset, TimeSlot, Appointment, DayOff
 from django.db.models import Q
 from collections import defaultdict
+from datetime import date
+
+
+def is_superuser(user):
+    return user.is_superuser
+
+def is_staff(user):
+    return user.is_authenticated and user.is_staff
 
 
 def is_slot_taken(app_date, slot):
@@ -33,3 +41,20 @@ def get_slots_by_date(target_date, by_preset=False):
 
     else:
         return all_time_slots
+
+
+def is_day_off(input_date):
+    active_day_offs = DayOff.objects.filter(
+        Q(end_date__gte=date.today()) | Q(end_date__isnull=True),
+        start_date__gte=date.today()
+    )
+
+    for day_off in active_day_offs:
+        if input_date == day_off.start_date:
+            return True
+        if input_date > day_off.start_date:
+            if day_off.end_date:
+                if input_date <= day_off.end_date:
+                    return True
+
+    return False

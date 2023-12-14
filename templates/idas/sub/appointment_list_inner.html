@@ -1,27 +1,65 @@
-<ul class="space-y-5">
-    {% for appointment in appointment_list %}
-        <li class="flex gap-5 justify-between items-center">
-            <a href="{% url 'appointment_details' pk=appointment.pk %}" class="inline-block flex gap-2">
-                <span>
-                    <span class="font-bold">Date:</span> {{ appointment.appointment_date }},
-                </span>
-                <span>
-                    <span class="font-bold">Time:</span> {{ appointment.appointment_slot.start_time }}
-                </span>
-            </a>
-            <a
-                style="cursor: pointer; color: red;"
-                type="button"
-                hx-delete="{% url 'appointment_delete' pk=appointment.pk %}"
-                hx-headers='{ "X-CSRFToken": "{{ csrf_token }}" }'
-                hx-confirm="Are you sure you want to delete this preset item?"
-                hx-target="#appointment_list"
-                hx-swap="innerHTML"
-            >
-                Delete Item.
-            </a>
-        </li>
-    {% endfor %}
-</ul>
+<div>
+    <h1 class="text-3xl md:text-4xl font-bold">
+        Active Appointments
+    </h1>
+    
+    <ul class="mt-14 space-y-5">
+        {% for appointment in active_appointments %}
+            {% include 'idas/sub/inner/appointment_item.html' %}
+        {% empty %}
+            <li>
+                No active appointments yet!
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+
+<div>
+    <h1 class="text-3xl md:text-4xl font-bold">
+        Completed Appointments
+    </h1>
+    
+    <ul class="mt-14 space-y-5">
+        {% for appointment in completed_appointments %}
+            {% include 'idas/sub/inner/appointment_item.html' %}
+        {% empty %}
+            <li>
+                No completed appointments yet!
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+
+<div>
+    <h1 class="text-3xl md:text-4xl font-bold">
+        Cancelled Appointments
+    </h1>
+    
+    <ul class="mt-14 space-y-5">
+        {% for appointment in cancelled_appointments %}
+            {% include 'idas/sub/inner/appointment_item.html' %}
+        {% empty %}
+            <li>
+                No cancelled appointments
+            </li>
+        {% endfor %}
+    </ul>
+</div>
+
+<div>
+    <h1 class="text-3xl md:text-4xl font-bold">
+        Missed Appointments
+    </h1>
+    
+    <ul class="mt-14 space-y-5">
+        {% for appointment in missed_appointments %}
+            {% include 'idas/sub/inner/appointment_item.html' %}
+        {% empty %}
+            <li>
+                No missed appointments
+            </li>
+        {% endfor %}
+    </ul>
+</div>
 
 {% include 'idas/sub/notification.html' with msg=msg msg_color=msg_color %}

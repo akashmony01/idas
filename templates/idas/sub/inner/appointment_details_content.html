@@ -1,0 +1,102 @@
+<div class="mt-8 text-lg grid grid-cols-1 md:grid-cols-2 gap-5">
+    <p>
+        <strong>Time:</strong>
+        {{appointment.appointment_slot.start_time}}
+    </p>
+    <p>
+        <strong>Chamber:</strong>
+        {{appointment.appointment_slot.preset.name}}
+    </p>
+    <p>
+        <strong>Name:</strong>
+        {{appointment.patient_name}}
+    </p>
+    <p>
+        <strong>Gender:</strong>
+        {{appointment.patient_gender}}
+    </p>
+    <p class="col-span-2 bg-secondary/10 p-4">
+        <strong>Description:</strong>
+        {{appointment.patient_description}}
+    </p>
+    <p class="col-span-2 bg-secondary/10 p-4">
+        <strong>Address:</strong>
+        {{appointment.patient_address}}
+    </p>
+    <p>
+        <strong>Type:</strong>
+        {{appointment.patient_type}}
+    </p>
+    <p>
+        <strong>Date:</strong>
+        {{appointment.appointment_date}}
+    </p>
+    <p>
+        <strong>Email:</strong>
+        {{appointment.patient_email}}
+    </p>
+    <p>
+        <strong>Phone:</strong>
+        {{appointment.patient_phone}}
+    </p>
+    {% if appointment.doctor_note %}
+    <p class="col-span-2 bg-secondary/10 p-4">
+        <strong>Doctor Note:</strong>
+        {{appointment.doctor_note}}
+    </p>
+    {% endif %}
+    {% if appointment.cancel_note %}
+    <p class="col-span-2 bg-secondary/10 p-4">
+        <strong>Cancel Note:</strong>
+        {{appointment.cancel_note}}
+    </p>
+    {% endif %}
+
+    {% if appointment.prescription %}
+        <div class="mt-10 col-span-2 bg-secondary/10 p-4">
+            <strong>
+                Prescription:
+            </strong>
+            <a
+                href="{{appointment.prescription.url}}"
+                target="_blank"
+                style="max-height: 250px; overflow-y: hidden;"
+                class="block w-full overflow-hidden pt-4"
+            >
+                <img
+                    style="margin: 0px;"
+                    class="w-full h-auto"
+                    src="{{appointment.prescription.url}}"
+                    alt="prescription"
+                />
+            </a>
+        </div>
+    {% endif %}
+
+    {% if patient_files %}
+    <p class="mt-5">
+        <strong>
+            Patient Files:
+        </strong>
+    </p>
+    <div class="col-span-2 grid grid-cols-1 md:grid-cols-2 gap-10">
+        {% for item in patient_files %}
+            <a
+                href="{{item.file.url}}"
+                target="_blank"
+                style="max-height: 200px; overflow-y: hidden;"
+                class="block w-full overflow-hidden p-4 bg-secondary/10"
+            >
+                <img
+                    style="margin: 0px;"
+                    class="w-full h-auto"
+                    src="{{item.file.url}}"
+                    alt="prescription"
+                />
+            </a>
+        {% empty %}
+            No patient Files
+        {% endfor %}
+    </div>
+    {% endif %}
+</div>

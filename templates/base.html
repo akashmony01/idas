@@ -1,26 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+{% extends 'init.html' %}
 
-    <script src="https://unpkg.com/htmx.org@1.9.9"></script>
-    <script src="https://unpkg.com/hyperscript.org@0.9.11"></script>
+{% block init_content %}
 
-    {% load static %}
-    <link rel="stylesheet" type="text/css" href="{% static 'styles/idas.css' %}">
-
-
-    <title>{% block title %}Individual Doctor Appointment System{% endblock %}</title>
-  </head>
-  <body>
-
-    <div
-        id="msg"
-        class="notification z-50"
-        hx-swap-oob
-    ></div>
 
     {% include 'components/header.html' %}
 
@@ -30,5 +11,4 @@
 
     {% include 'components/footer.html' %}
 
-  </body>
-</html>
+{% endblock %}

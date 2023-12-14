@@ -1,0 +1,15 @@
+{% extends 'dash_layout.html' %}
+
+{% block dash_content %}
+
+        <div class="container">
+            <h1 class="text-4xl md:text-5xl font-bold">
+                Site Info
+            </h1>
+
+            <div id="site_info_form" class="mt-14">
+                {% include 'idas/sub/site_info_form.html' %}
+            </div>
+        </div>
+
+{% endblock %}

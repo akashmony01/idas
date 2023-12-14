@@ -15,6 +15,17 @@
         {{ form.as_p }}
         <button type="submit">Login</button>
       </form>
+      <div class="mt-5">
+        Dont have an account?
+        <a href="{% url 'signup' %}" class="underline">
+          Signup here
+        </a>
+        <div>
+          <a href="{% url 'password_reset' %}" class="underline text-red-500">
+            Forgot Password?
+          </a>
+        </div>
+      </div>
     </div>
   </section>
 {% endblock %}

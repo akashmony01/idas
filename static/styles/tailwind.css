@@ -35,6 +35,10 @@
         @apply space-y-2 text-secondary-light list-disc pl-4;
     }
 
+    form ul.errorlist {
+        @apply text-red-500;
+    }
+
     form button{
         @apply border-2 border-secondary hover:bg-secondary hover:text-white px-10 py-2 uppercase font-bold;
     }
@@ -42,4 +46,6 @@
     form span{
         @apply block mt-2 text-secondary-light;
     }
+
+    [x-cloak] { display: none !important; }
 }

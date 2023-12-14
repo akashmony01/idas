@@ -1,8 +1,9 @@
 <form
+    id="update_form"
     method="post"
     enctype="multipart/form-data"
     hx-post="{% url 'appointment_file_update' pk=appointment_pk %}"
-    hx-swap="outerHTML"
+    hx-swap="innerHTML"
     hx-target="#appointment_file_form"
     hx-trigger="input delay:1s"
 >
@@ -11,8 +12,20 @@
     {% for form in update_file_form %}
     <div class="file-item">
         {{form.as_p}}
-        <div class="">
-              <img src="{{ form.instance.file.url }}" alt="{{ form.instance.name }}">
+        <div class="bg-secondary/10 p-4">
+            <a
+                href="{{form.instance.file.url}}"
+                target="_blank"
+                style="height: 100px; overflow-y: hidden;"
+                class="block w-full overflow-hidden"
+            >
+                <img
+                    style="margin: 0px;"
+                    class="w-full h-auto"
+                    src="{{ form.instance.file.url }}"
+                    alt="{{ form.instance.name }}"
+                />
+            </a>
         </div>
         <a
             style="cursor: pointer; color: red;"
@@ -31,10 +44,11 @@
 
 
 <form
+    id="add_form"
     method="post"
     enctype="multipart/form-data"
     hx-post="{% url 'appointment_file_add' pk=appointment_pk %}"
-    hx-swap="outerHTML"
+    hx-swap="innerHTML"
     hx-target="#appointment_file_form"
     hx-trigger="submit"
 >

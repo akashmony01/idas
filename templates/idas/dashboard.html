@@ -1,0 +1,53 @@
+{% extends 'dash_layout.html' %}
+
+{% block dash_content %}
+
+    {% if user.is_staff and not user.is_superuser %}
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 text-center text-2xl font-bold text-white">
+            <a class="w-full block py-20 px-14 bg-secondary/50 rounded-lg" href="{% url 'appointment_get' %}">
+                Create Appointments
+            </a>
+            <a class="w-full block py-20 px-14 bg-secondary/50 rounded-lg" href="{% url 'chamber_appointments' %}">
+                Chamber Appointments
+            </a>
+            <a class="w-full block py-20 px-14 bg-secondary/50 rounded-lg" href="{% url 'chamber_appointments_today' %}">
+                Today Appointments
+            </a>
+        </div>
+    {% endif %}
+
+    {% if user.is_superuser %}
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 text-center text-2xl font-bold text-white">
+            <a class="w-full block py-20 px-14 bg-secondary/50 rounded-lg" href="">
+                Site Info
+            </a>
+            <a class="w-full block py-20 px-14 bg-secondary/50 rounded-lg" href="{% url 'preset_create' %}">
+                Create Preset (Chamber)
+            </a>
+            <a class="w-full block py-20 px-14 bg-secondary/50 rounded-lg" href="{% url 'preset_list' %}">
+                Preset (Chamber) List
+            </a>
+            <a class="w-full block py-20 px-14 bg-secondary/50 rounded-lg" href="{% url 'day_off_create' %}">
+                Create Day Off
+            </a>
+            <a class="w-full block py-20 px-14 bg-secondary/50 rounded-lg" href="{% url 'day_off_list' %}">
+                Day Off List
+            </a>
+            <a class="w-full block py-20 px-14 bg-secondary/50 rounded-lg" href="{% url 'appointment_list' %}">
+                All appointment
+            </a>
+            <a class="w-full block py-20 px-14 bg-secondary/50 rounded-lg" href="{% url 'appointment_list_today' %}">
+                Today's Appointment
+            </a>
+            <a class="w-full block py-20 px-14 bg-secondary/50 rounded-lg" href="{% url 'collaborator_create' %}">
+                Create Collaborators
+            </a>
+            <a class="w-full block py-20 px-14 bg-secondary/50 rounded-lg" href="{% url 'collaborator_list' %}">
+                All Collaborators
+            </a>
+        </div>
+    {% endif %}
+
+    {% include 'idas/sub/notification.html' with msg=msg msg_color=msg_color %}
+
+{% endblock %}

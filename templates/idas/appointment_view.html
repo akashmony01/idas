@@ -1,0 +1,12 @@
+{% extends 'dash_layout.html' %}
+
+{% block dash_content %}
+        <div
+            x-data="{ openCancel: false, openComplete: false  }"
+            id="appointment_view"
+            class="container"
+        >
+            {% include 'idas/sub/appointment_view_inner.html' %}
+        </div>
+
+{% endblock %}

@@ -1,17 +1,9 @@
-{% extends 'base.html' %}
+{% extends 'dash_layout.html' %}
 
-{% block content %}
+{% block dash_content %}
 
-    <section class="py-20">
-        <div class="container max-w-lg prose prose-base">
-            <h1>
-                All presets
-            </h1>
-
-            <div id="preset_list">
-                {% include 'idas/sub/preset_list_inner.html' %}
-            </div>
-        </div>
-    </section>
+    <div id="preset_list" class="container">
+        {% include 'idas/sub/preset_list_inner.html' %}
+    </div>
 
 {% endblock %}

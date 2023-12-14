@@ -1,0 +1,17 @@
+{% extends 'dash_layout.html' %}
+
+{% block dash_content %}
+
+        <div class="container">
+            <h1 class="text-4xl md:text-5xl font-bold">
+              Create Day Offs
+            </h1>
+
+            <form method="post" action="{% url 'day_off_create' %}">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Create Day Off</button>
+            </form>
+        </div>
+
+{% endblock %}

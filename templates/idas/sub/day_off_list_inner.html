@@ -1,0 +1,76 @@
+<h1 class="text-4xl md:text-5xl font-bold">
+    Active Day Offs
+</h1>
+
+<ul class="mt-14 space-y-5">
+    {% for item in active_dayoffs %}
+        <li class="flex gap-5 justify-between items-center p-5 bg-primary/20 hover:bg-primary/40 duration-300 rounded-md">
+            <a href="{% url 'day_off_details' pk=item.pk %}" class="block underline">
+                <h3 class="font-bold text-xl">
+                    Title: {{ item.title }}
+                </h3>
+                <div class="flex gap-2 pt-2">
+                    <span>
+                        <span class="font-bold">Start:</span> {{ item.start_date }}
+                    </span>
+                    {% if item.end_date %}
+                    <span>
+                        <span class="font-bold">Ends:</span> {{ item.end_date }}
+                    </span>
+                    {% endif %}
+                </div>
+            </a>
+            <a
+                style="cursor: pointer; color: red;"
+                type="button"
+                hx-delete="{% url 'day_off_delete' pk=item.pk %}"
+                hx-headers='{ "X-CSRFToken": "{{ csrf_token }}" }'
+                hx-confirm="Are you sure you want to delete this item?"
+                hx-target="#day_off_list"
+                hx-swap="innerHTML"
+            >
+                Delete Item.
+            </a>
+        </li>
+    {% endfor %}
+</ul>
+
+<h1 class="mt-20 text-4xl md:text-5xl font-bold">
+    Previous Day Offs
+</h1>
+
+<ul class="mt-14 space-y-5">
+    {% for item in previous_dayoffs %}
+        <li class="flex gap-5 justify-between items-center p-5 bg-primary/20 hover:bg-primary/40 duration-300 rounded-md">
+            <a href="{% url 'day_off_details' pk=item.pk %}" class="block underline">
+                <h3 class="font-bold text-xl">
+                    Title: {{ item.title }}
+                </h3>
+                <div class="flex gap-2 pt-2">
+                    <span>
+                        <span class="font-bold">Start:</span> {{ item.start_date }}
+                    </span>
+                    {% if item.end_date %}
+                    <span>
+                        <span class="font-bold">Ends:</span> {{ item.end_date }}
+                    </span>
+                    {% endif %}
+                </div>
+            </a>
+            <a
+                style="cursor: pointer; color: red;"
+                type="button"
+                hx-delete="{% url 'day_off_delete' pk=item.pk %}"
+                hx-headers='{ "X-CSRFToken": "{{ csrf_token }}" }'
+                hx-confirm="Are you sure you want to delete this item?"
+                hx-target="#day_off_list"
+                hx-swap="innerHTML"
+            >
+                Delete Item.
+            </a>
+        </li>
+    {% endfor %}
+</ul>
+
+
+{% include 'idas/sub/notification.html' with msg=msg msg_color=msg_color %}

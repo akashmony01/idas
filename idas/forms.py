@@ -1,7 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from .models import Profile, TimeSlotPreset, TimeSlot, Appointment, PatientFile
+from .models import SiteInfo, Profile, TimeSlotPreset, TimeSlot, Appointment, PatientFile, DayOff
 
 class CustomSignupForm(UserCreationForm):
     email = forms.EmailField(required=True)
@@ -9,6 +9,39 @@ class CustomSignupForm(UserCreationForm):
     class Meta:
         model = User  # Assuming you have imported User model
         fields = ['username', 'email', 'password1', 'password2']
+
+
+class CollaboratorForm(forms.ModelForm):
+    password = forms.CharField(label='Password', widget=forms.PasswordInput, required=True, )
+    preset = forms.ModelChoiceField(queryset=TimeSlotPreset.objects.all(), required=True, label='Chamber')
+
+    class Meta:
+        model = User
+        fields = ('username', 'email', 'password')
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['email'].required = True
+
+    def save(self, commit=True):
+        user = super().save(commit=False)
+        user.set_password(self.cleaned_data['password'])
+        user.is_staff = True
+
+        if commit:
+            user.save()
+            profile, created = Profile.objects.get_or_create(user=user)
+            profile.preset = self.cleaned_data.get('preset')
+            profile.save()
+
+        return user
+
+
+
+class SiteInfoForm(forms.ModelForm):
+    class Meta:
+        model = SiteInfo
+        fields = '__all__'
 
 
 class ProfileForm(forms.ModelForm):
@@ -62,9 +95,6 @@ class AppointmentForm(forms.ModelForm):
             'appointment_slot',
             'appointment_date',
             'appointment_status',
-            'cancel_note',
-            'doctor_note',
-            'prescription',
         ]
         widgets = {
             'appointment_date': forms.HiddenInput(attrs={'readonly': 'readonly'}),
@@ -85,3 +115,13 @@ PatientFileFormSet = forms.modelformset_factory(
     fields=["name", "file"],
     extra=0
 )
+
+
+class DayOffForm(forms.ModelForm):
+    class Meta:
+        model = DayOff
+        fields = ["title", "start_date", "end_date", "desc_note"]
+        widgets = {
+            'start_date': forms.DateInput(attrs={'type': 'date'}),
+            'end_date': forms.DateInput(attrs={'type': 'date'}),
+        }

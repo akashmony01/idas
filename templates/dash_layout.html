@@ -1,0 +1,20 @@
+{% extends 'init.html' %}
+
+{% block init_content %}
+
+    {% include 'components/dash_header.html' %}
+
+    <main
+        style="margin-top: 72px; height: calc(100vh - 72px);"
+        class="relative pl-72"
+    >
+        {% include 'components/sidebar.html' %}
+
+        <section class="h-full p-14 overflow-y-auto">
+            {% block dash_content %}{% endblock %}
+        </section>
+    </main>
+
+    {% include 'idas/sub/notification.html' with msg=msg msg_color=msg_color %}
+
+{% endblock %}

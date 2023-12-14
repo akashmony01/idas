@@ -1,19 +1,17 @@
-{% extends 'base.html' %}
+{% extends 'dash_layout.html' %}
 
-{% block content %}
+{% block dash_content %}
 
-    <section class="py-20">
-        <div class="container prose prose-base max-w-lg">
-            <h1>
-              Create preset
-            </h1>
+    <div class="container">
+        <h1 class="text-4xl md:text-5xl font-bold">
+          Create chamber
+        </h1>
 
-            <form method="post" action="{% url 'preset_create' %}">
-                {% csrf_token %}
-                {{ form.as_p }}
-                <button type="submit">Save</button>
-            </form>
-        </div>
-    </section>
+        <form method="post" action="{% url 'preset_create' %}">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Save</button>
+        </form>
+    </div>
 
 {% endblock %}

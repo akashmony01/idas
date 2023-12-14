@@ -25,10 +25,12 @@ urlpatterns = [
     path('accounts/', include('django.contrib.auth.urls')),
     path('login/', auth_views.LoginView.as_view(next_page='home'), name='login_alternative'),
     path('logout/', auth_views.LogoutView.as_view(next_page='home'), name='logout_alternative'),
+    path('password_reset/', auth_views.PasswordResetView.as_view(), name='password_reset'),
 
     path("", include('idas.urls')),
 ]
 
 
-if settings.DEBUG:
-    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+# if settings.DEBUG:
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

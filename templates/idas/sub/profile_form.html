@@ -1,0 +1,23 @@
+<div class="flex items-center gap-5">
+    {% if avatar %}
+        <img class="w-14 h-14 object-cover rounded-full" src="{{ avatar.url }}" alt="{{ request.user.profile }}">
+    {% endif %}
+    <h1 class="text-xl md:text-2xl font-bold">
+      {{request.user.profile}}:
+    </h1>
+</div>
+
+<form
+    id="profile_form"
+    method="post"
+    enctype="multipart/form-data"
+    hx-post="{% url 'profile_update' %}"
+    hx-swap="innerHTML"
+    hx-target="#profile_form"
+    hx-trigger="input delay:1s"
+>
+    {% csrf_token %}
+    {{ profile_form.as_p }}
+</form>
+
+{% include 'idas/sub/notification.html' with msg=msg msg_color=msg_color %}

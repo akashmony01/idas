@@ -1,5 +1,6 @@
 {% if msg %}
 <div
+    style="z-index: 99999;"
     id="msg" _='on load wait 1s then add .hidden'
     hx-swap-oob="outerHTML:#msg"
     class="fixed top-28 left-1/2 transform -translate-x-1/2"

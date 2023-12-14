@@ -1,17 +1,9 @@
-{% extends 'base.html' %}
+{% extends 'dash_layout.html' %}
 
-{% block content %}
+{% block dash_content %}
 
-    <section class="py-20">
-        <div class="container max-w-lg prose prose-base">
-            <h1>
-                All Appointments
-            </h1>
-
-            <div id="appointment_list">
-                {% include 'idas/sub/appointment_list_inner.html' %}
-            </div>
-        </div>
-    </section>
+    <div id="appointment_list" class="container grid grid-cols-1 md: grid-cols-2 gap-x-10 lg:gap-x-20 gap-y-20">
+        {% include 'idas/sub/appointment_list_inner.html' %}
+    </div>
 
 {% endblock %}

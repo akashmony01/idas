@@ -1,0 +1,64 @@
+<h2 class="mb-8 font-bold flex items-center flex-wrap gap-3">
+    <span class="text-4xl md:text-5xl">
+        View appointment
+    </span>
+    <span class="text-2xl text-primary">({{appointment.appointment_status}})</span>
+</h2>
+<hr />
+
+{% include 'idas/sub/inner/appointment_details_content.html' %}
+
+<div class="mt-20 block flex flex-col sm:flex-row gap-5 items-center text-center text-lg">
+    {% if appointment.appointment_status == 'confirmed' %}
+        <a
+            type="button"
+            hx-post="{% url 'appointment_mark_arrived' pk=appointment.pk %}?is_single=True"
+            hx-headers='{ "X-CSRFToken": "{{ csrf_token }}" }'
+            hx-confirm="Are you sure you want to mark this item as arrived?"
+            hx-target="#appointment_view"
+            hx-swap="innerHTML"
+            class="w-full p-3 border-2 border-blue-500 text-blue-500 hover:text-white hover:bg-blue-500 font-bold hover:opacity-100 rounded-md"
+        >
+            Mark Arrived
+        </a>
+
+        {% if user.is_superuser %}
+        <button
+            x-on:click="openCancel = true"
+            class="w-full p-3 border-2 border-red-500 text-red-500 hover:text-white hover:bg-red-500 font-bold hover:opacity-100 rounded-md"
+        >
+            Cancel
+        </button>
+        {% endif %}
+    {% elif appointment.appointment_status == 'arrived' %}
+        <a
+            type="button"
+            hx-post="{% url 'appointment_mark_arrived' pk=appointment.pk %}?is_reverse=True&is_single=True"
+            hx-headers='{ "X-CSRFToken": "{{ csrf_token }}" }'
+            hx-confirm="Are you sure you want to remove this item from arrived?"
+            hx-target="#appointment_view"
+            hx-swap="innerHTML"
+            class="w-full p-3 border-2 border-blue-500 text-blue-500 hover:text-white hover:bg-blue-500 font-bold hover:opacity-100 rounded-md"
+        >
+            Remove From Arrived
+        </a>
+        {% if user.is_superuser %}
+            <a
+                x-on:click="openComplete = true"
+                class="w-full p-3 border-2 border-green-500 text-green-500 hover:text-white hover:bg-green-500 font-bold hover:opacity-100 rounded-md"
+            >
+                Mark Completed
+            </a>
+        {% endif %}
+    {% endif %}
+</div>
+
+
+{% if user.is_superuser and appointment.appointment_status == 'confirmed'%}
+    {% include 'idas/sub/inner/cancel_modal.html' with is_single=True %}
+{% endif %}
+{% if user.is_superuser and appointment.appointment_status == 'arrived'%}
+    {% include 'idas/sub/inner/complete_modal.html' with is_single=True %}
+{% endif %}
+
+{% include 'idas/sub/notification.html' with msg=msg msg_color=msg_color %}

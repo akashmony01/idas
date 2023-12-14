@@ -1,0 +1,61 @@
+<aside
+    style="padding-top: 104px;"
+    class="fixed top-0 left-0 bottom-0 bg-secondary w-72 py-8 px-4 text-white shadow-md"
+>
+    <div class="max-h-full overflow-y-auto flex flex-col gap-8 text-base">
+        <div class="flex flex-col gap-3 text-white underline">
+            <a href="{% url 'dashboard' %}">
+                Dashboard
+            </a>
+            {% if user.is_staff and not user.is_superuser %}
+                <a href="{% url 'chamber_appointments' %}">
+                    Chamber Appointments
+                </a>
+                <a href="{% url 'chamber_appointments_today' %}">
+                    Today Appointments
+                </a>
+            {% endif %}
+            {% if user.is_superuser %}
+                <a href="{% url 'site_info' %}">
+                    Site Info
+                </a>
+            {% endif %}
+        </div>
+
+        {% if user.is_superuser %}
+            <div class="flex flex-col gap-3 text-primary underline">
+                <a href="{% url 'preset_create' %}">
+                    Create Chamber
+                </a>
+                <a href="{% url 'preset_list' %}">
+                    Chamber List
+                </a>
+            </div>
+
+            <div class="flex flex-col gap-3 text-white underline">
+                <a href="{% url 'day_off_create' %}">
+                    Create Day Off
+                </a>
+                <a href="{% url 'day_off_list' %}">
+                    Day Off List
+                </a>
+            </div>
+            <div class="flex flex-col gap-3 text-primary underline">
+                <a href="{% url 'appointment_list' %}">
+                    All appointment
+                </a>
+                <a href="{% url 'appointment_list_today' %}">
+                    Today's Appointment
+                </a>
+            </div>
+            <div class="flex flex-col gap-3 text-white underline">
+                <a href="{% url 'collaborator_create' %}">
+                    Create Collaborators
+                </a>
+                <a href="{% url 'collaborator_list' %}">
+                    All Collaborators
+                </a>
+            </div>
+        {% endif %}
+    </div>
+</aside>

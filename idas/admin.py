@@ -1,8 +1,28 @@
 from django.contrib import admin
-from .models import Profile, TimeSlotPreset, TimeSlot, Appointment, PatientFile
+from .models import SiteInfo, Speciality, WorkHistory, Qualification, Profile, TimeSlotPreset, TimeSlot, Appointment, PatientFile, DayOff
 
 
 # Register your models here.
+@admin.register(SiteInfo)
+class SiteInfoAdmin(admin.ModelAdmin):
+    list_display = ['hero_subheading', 'hero_heading', 'hero_desc', 'hero_btn_1_text', 'hero_btn_2_text']
+
+
+@admin.register(Speciality)
+class SpecialityAdmin(admin.ModelAdmin):
+    list_display = ['title', 'description']
+
+
+@admin.register(WorkHistory)
+class WorkHistoryAdmin(admin.ModelAdmin):
+    list_display = ['title', 'description']
+
+
+@admin.register(Qualification)
+class QualificationAdmin(admin.ModelAdmin):
+    list_display = ['title', 'description']
+
+
 @admin.register(Profile)
 class ProfileAdmin(admin.ModelAdmin):
     list_display = ['user', 'first_name', 'last_name', 'avatar', 'address']
@@ -30,4 +50,9 @@ class AppointmentAdmin(admin.ModelAdmin):
 
 @admin.register(PatientFile)
 class PatientFileAdmin(admin.ModelAdmin):
-    list_display = ('file',)
+    list_display = ('name', 'file', 'user')
+
+
+@admin.register(DayOff)
+class DayOffAdmin(admin.ModelAdmin):
+    list_display = ('title', 'start_date', 'end_date', 'desc_note')

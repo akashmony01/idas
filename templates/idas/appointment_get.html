@@ -11,12 +11,12 @@
     <section class="py-32">
         <div class="container prose prose-base">
 
-            {% if past_date %}
-                <h1>
-                    You choose a past date
+            {% if past_date or day_off %}
+                <h1 class="text-red-400">
+                    {{heading}}
                 </h1>
                 <p>
-                    please select a present or a future day, that will valid.
+                    {{desc}}
                 </p>
             {% else %}
                 <h1>

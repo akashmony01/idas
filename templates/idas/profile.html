@@ -3,33 +3,16 @@
 {% block content %}
 
   <section class="py-20">
-    <div class="container prose prose-xl">
-      <h1>
-        Profile information
-      </h1>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium, aperiam dolores et fugiat id iusto non
-        omnis provident quisquam vitae?
-      </p>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium, aperiam dolores et fugiat id iusto non
-        omnis provident quisquam vitae?
-      </p><p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium, aperiam dolores et fugiat id iusto non
-        omnis provident quisquam vitae?
-      </p><p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium, aperiam dolores et fugiat id iusto non
-        omnis provident quisquam vitae?
-      </p><p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium, aperiam dolores et fugiat id iusto non
-        omnis provident quisquam vitae?
-      </p><p>
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium, aperiam dolores et fugiat id iusto non
-        omnis provident quisquam vitae?
-      </p>
-
-
+    <div class="container grid grid-cols-1 lg:grid-cols-2 gap-14">
+      <div class="w-full" id="profile_form">
+        {% include 'idas/sub/profile_form.html' %}
+      </div>
+      <div class="w-full" id="user_appointment_list">
+        {% include 'idas/sub/profile_appointment_list.html' %}
+      </div>
     </div>
   </section>
+
+  {% include 'idas/sub/notification.html' with msg=msg msg_color=msg_color %}
 
 {% endblock %}

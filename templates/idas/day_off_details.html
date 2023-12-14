@@ -1,0 +1,16 @@
+{% extends 'dash_layout.html' %}
+
+{% block dash_content %}
+        <div class="container">
+
+            <h2 class="mb-8 text-4xl md:text-5xl font-bold">Day Off details</h2>
+
+            <div id="day_off_update_form">
+                {% include 'idas/sub/day_off_update_form.html' %}
+            </div>
+
+        </div>
+
+    {% include 'idas/sub/notification.html' with msg=msg msg_color=msg_color %}
+
+{% endblock %}

@@ -5,7 +5,7 @@
 
 {% block content %}
 
-<section class="pb-20 md:pb-0 pt-20" xmlns="http://www.w3.org/1999/html">
+    <section class="pb-20 md:pb-0 pt-20" xmlns="http://www.w3.org/1999/html">
         <div class="container flex flex-col-reverse md:flex-row items-center justify-between gap-20">
             <article class="w-full md:w-6/12 prose prose-lg lg:prose-xl">
                 <p>
@@ -42,8 +42,8 @@
             <h2 class="text-5xl font-bold uppercase">
                 My Specilities
             </h2>
-            <ul class="mt-24 flex flex-wrap items-center justify-center gap-4">
-                <li class="p-10 rounded-md shadow-md bg-primary-light text-secondary">
+            <ul class="mt-24 flex flex-col sm:flex-row sm:flex-wrap items-center justify-center gap-4">
+                <li class="p-10 w-full sm:w-auto rounded-md shadow-md bg-primary-light text-secondary">
                     <h5 class="font-bold text-xl mb-2">
                         Number 1
                     </h5>
@@ -51,21 +51,7 @@
                         This is description number 1.
                     </p>
                 </li>
-                <li class="p-10 rounded-md shadow-md bg-primary-light text-secondary">
-                    <h5 class="font-bold text-xl mb-2">
-                        Number 1
-                    </h5>
-                    <p>
-                        This is description number 1.
-                    </p>
-                </li><li class="p-10 rounded-md shadow-md bg-primary-light text-secondary">
-                    <h5 class="font-bold text-xl mb-2">
-                        Number 1
-                    </h5>
-                    <p>
-                        This is description number 1.
-                    </p>
-                </li><li class="p-10 rounded-md shadow-md bg-primary-light text-secondary">
+                <li class="p-10 w-full sm:w-auto rounded-md shadow-md bg-primary-light text-secondary">
                     <h5 class="font-bold text-xl mb-2">
                         Number 1
                     </h5>
@@ -73,22 +59,35 @@
                         This is description number 1.
                     </p>
                 </li>
-
-
+                <li class="p-10 w-full sm:w-auto rounded-md shadow-md bg-primary-light text-secondary">
+                    <h5 class="font-bold text-xl mb-2">
+                        Number 1
+                    </h5>
+                    <p>
+                        This is description number 1.
+                    </p>
+                </li>
+                <li class="p-10 w-full sm:w-auto rounded-md shadow-md bg-primary-light text-secondary">
+                    <h5 class="font-bold text-xl mb-2">
+                        Number 1
+                    </h5>
+                    <p>
+                        This is description number 1. cvfhertyerthtyhrtyhtyhythythtyh
+                    </p>
+                </li>
             </ul>
         </div>
     </section>
 
-
     <section>
-        <div class="container flex flex-col md:flex-row divide-x-2 divide-primary/50">
-            <div class="py-36 w-full md:w-6/12 pr-20 text-right">
+        <div class="container flex flex-col md:flex-row md:divide-x-2 md:divide-primary/50">
+            <div class="py-32 md:py-36 w-full md:w-6/12 md:pr-20 text-left md:text-right">
                 <h2 class="text-4xl font-bold uppercase">
                     Work history
                 </h2>
                 <ul class="mt-24 space-y-12">
                     <li>
-                        <div class="flex items-center justify-end gap-4">
+                        <div class="flex items-center justify-start md:justify-end gap-4">
                             <h3 class="text-3xl font-medium">
                                 Work history one
                             </h3>
@@ -107,7 +106,7 @@
                         </article>
                     </li>
                     <li>
-                        <div class="flex items-center justify-end gap-4">
+                        <div class="flex items-center justify-start md:justify-end gap-4">
                             <h3 class="text-3xl font-medium">
                                 Work history 99
                             </h3>
@@ -125,7 +124,7 @@
                         </article>
                     </li>
                     <li>
-                        <div class="flex items-center justify-end gap-4">
+                        <div class="flex items-center justify-start md:justify-end gap-4">
                             <h3 class="text-3xl font-medium">
                                 Work history Two
                             </h3>
@@ -145,7 +144,7 @@
                 </ul>
 
             </div>
-            <div class="py-36 w-full md:w-6/12 pl-20 text-left">
+            <div class="pb-32 md:py-36 w-full md:w-6/12 md:pl-20 text-left">
                 <h2 class="text-4xl font-bold uppercase">
                     Qualification
                 </h2>

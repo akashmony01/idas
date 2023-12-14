@@ -1,0 +1,29 @@
+{% for manager in managers %}
+    <li class="flex justify-between items-center gap-5 p-5 bg-primary/20 hover:bg-primary/40 duration-300 rounded-md">
+        <div class="pt-2 flex gap-2 text-lg">
+            <span>
+                <span class="font-bold">Username:</span> {{ manager.username }},
+            </span>
+            <span>
+                <span class="font-bold">chamber:</span> {{ manager.profile.preset }}
+            </span>
+        </div>
+        <a
+            style="cursor: pointer; color: red;"
+            type="button"
+            hx-delete="{% url 'collaborator_delete' pk=manager.pk %}"
+            hx-headers='{ "X-CSRFToken": "{{ csrf_token }}" }'
+            hx-confirm="Are you sure you want to delete this item?"
+            hx-target="#manager_list"
+            hx-swap="innerHTML"
+        >
+            Delete
+        </a>
+    </li>
+{% empty %}
+    <li>
+        No collaborators
+    </li>
+{% endfor %}
+
+{% include 'idas/sub/notification.html' with msg=msg msg_color=msg_color %}

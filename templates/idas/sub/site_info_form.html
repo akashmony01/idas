@@ -1,0 +1,14 @@
+<form
+    id="site_info_form"
+    method="post"
+    enctype="multipart/form-data"
+    hx-post="{% url 'site_info_update' %}"
+    hx-swap="innerHTML"
+    hx-target="#site_info_form"
+    hx-trigger="input delay:1s"
+>
+    {% csrf_token %}
+    {{ form.as_p }}
+</form>
+
+{% include 'idas/sub/notification.html' with msg=msg msg_color=msg_color %}
