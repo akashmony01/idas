@@ -17,6 +17,7 @@ from datetime import datetime
 from .utils import is_superuser, is_staff, get_slots_by_date, is_slot_taken, is_day_off
 from django.http import Http404
 from django.db.models import Q
+from django.core.mail import send_mail
 today = date.today()
 
 
@@ -641,6 +642,12 @@ def appointment_mark_completed_view(request, pk):
         item.appointment_status = 'completed'
         item.save()
 
+        subject = 'Your appointment have been completed!'
+        message = doctor_note
+        from_email = 'admin@idas.com'
+        recipient_list = [item.patient_email]
+        send_mail(subject, message, from_email, recipient_list)
+
         if is_single:
             context = {
                 "appointment": item,
@@ -671,6 +678,12 @@ def appointment_mark_cancelled_view(request, pk):
         item.cancel_note = cancel_note
         item.appointment_status = 'cancelled'
         item.save()
+
+        subject = 'Your appointment have been cancelled!'
+        message = cancel_note
+        from_email = 'admin@idas.com'
+        recipient_list = [item.patient_email]
+        send_mail(subject, message, from_email, recipient_list)
 
         if is_single:
             context = {
@@ -872,6 +885,30 @@ def day_off_create_view(request):
         form = DayOffForm(request.POST)
         if form.is_valid():
             day_off_instance = form.save(commit=False)
+
+            if day_off_instance.end_date:
+                overlapping_appointments = Appointment.objects.filter(
+                    Q(appointment_date__range=[day_off_instance.start_date, day_off_instance.end_date]) |
+                    Q(appointment_date=day_off_instance.start_date) |
+                    Q(appointment_date=day_off_instance.end_date)
+                )
+            else:
+                overlapping_appointments = Appointment.objects.filter(
+                    Q(appointment_date=day_off_instance.start_date)
+                )
+
+            if overlapping_appointments.exists():
+                for appointment in overlapping_appointments:
+                    appointment.cancel_note = day_off_instance.desc_note
+                    appointment.appointment_status = 'cancelled'
+                    appointment.save()
+
+                    subject = 'Your appointment have been cancelled!'
+                    message = day_off_instance.desc_note
+                    from_email = 'admin@idas.com'
+                    recipient_list = [appointment.patient_email]
+                    send_mail(subject, message, from_email, recipient_list)
+
             day_off_instance.save()
             return redirect('day_off_list')
     else:
